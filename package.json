@@ -1,0 +1,26 @@
+{
+  "name": "news-workers",
+  "version": "1.0.0",
+  "main": "scripts/worker.ts",
+  "scripts": {
+    "start": "tsx scripts/worker.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "bullmq": "^5.65.1",
+    "dotenv": "^17.2.3",
+    "ioredis": "^5.8.2",
+    "pdf-parse": "^2.4.5",
+    "pdf2pic": "^3.2.0",
+    "pdfkit": "^0.17.2",
+    "tesseract.js": "^6.0.1",
+    "tsx": "^4.21.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/node-fetch": "^2.6.13",
+    "@types/pdfkit": "^0.17.4",
+    "prisma": "^6.19.0"
+  }
+}
