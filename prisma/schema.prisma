@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id        String   @id
+  email     String?
+  name      String?
+  image     String?
+
+  newspapers  Newspaper[]
+  summaries   Summary[]
+}
+
+model Newspaper {
+  id         Int        @id @default(autoincrement())
+  title      String
+  fileUrl    String
+  uploadedAt DateTime   @default(now())
+  userId     String
+  user       UserProfile @relation(fields: [userId], references: [id])
+
+  summaries  Summary[]
+}
+
+model Summary {
+  id          Int         @id @default(autoincrement())
+  newspaperId Int
+  userId      String
+  content     String
+  createdAt   DateTime    @default(now())
+
+  newspaper   Newspaper   @relation(fields: [newspaperId], references: [id])
+  user        UserProfile @relation(fields: [userId], references: [id])
+}
