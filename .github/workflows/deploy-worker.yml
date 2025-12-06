@@ -9,29 +9,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # Step 1 — Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Setup Node
+      # Step 2 — Setup Node
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # Step 3: Install dependencies
+      # Step 3 — Install Dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Type check (optional)
-      - name: Type check
+      # Step 4 — Prisma generate (required for @prisma/client)
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      # Step 5 — TypeScript Type Check
+      - name: TypeScript type check
         run: npx tsc --noEmit
 
-      # Step 5: Lint check (optional)
-      - name: Lint check
-        run: echo "Skipping lint (add eslint later)"
-
-      # Step 6: Build Docker image (CI test)
+      # Step 6 — Docker Build Test (CI only)
       - name: Docker build test
-        run: |
-          docker build -t worker-ci-test .
+        run: docker build -t worker-ci-test .
