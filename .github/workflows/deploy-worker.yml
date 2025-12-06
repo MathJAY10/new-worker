@@ -1,0 +1,37 @@
+name: Worker CI
+
+on:
+  push:
+    branches: ["main", "dev"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Type check (optional)
+      - name: Type check
+        run: npx tsc --noEmit
+
+      # Step 5: Lint check (optional)
+      - name: Lint check
+        run: echo "Skipping lint (add eslint later)"
+
+      # Step 6: Build Docker image (CI test)
+      - name: Docker build test
+        run: |
+          docker build -t worker-ci-test .
